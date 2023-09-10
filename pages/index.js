@@ -45,7 +45,7 @@ async function fetchReferences(component) {
     component.content = htmlContent;
   }
   if (component.children) {
-    component.children.forEach((child) => fetchReferences(child));
+    component.children.forEach(async (child) => await fetchReferences(child));
   }
   return component;
 }
@@ -54,8 +54,8 @@ export async function getStaticProps(props) {
   const data = await fetchPlaystationData();
 
   // Fetch HTML content for Experience Fragments that are in HTML format
-  const fetchPromises = data.components.map((component) =>
-    fetchReferences(component),
+  const fetchPromises = data.components.map(
+    async (component) => await fetchReferences(component),
   );
 
   const updatedComponents = await Promise.all(fetchPromises);
