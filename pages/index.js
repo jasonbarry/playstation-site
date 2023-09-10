@@ -37,26 +37,25 @@ export default function Home({ data }) {
   );
 }
 
-async function fetchReferences(req, component) {
-  const scheme = process.env.NODE_ENV === "development" ? "http" : "https";
+async function fetchReferences(component) {
   if (component.type === "ExperienceFragment" && component.format === "HTML") {
-    const url = `${scheme}://${req.headers.host}${component.reference}`;
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}${component.reference}`;
     const response = await fetch(url);
     const htmlContent = await response.text();
     component.content = htmlContent;
   }
   if (component.children) {
-    component.children.forEach((child) => fetchReferences(req, child));
+    component.children.forEach((child) => fetchReferences(child));
   }
   return component;
 }
 
-export async function getServerSideProps({ req }) {
+export async function getStaticProps(props) {
   const data = await fetchPlaystationData();
 
   // Fetch HTML content for Experience Fragments that are in HTML format
   const fetchPromises = data.components.map((component) =>
-    fetchReferences(req, component),
+    fetchReferences(component),
   );
 
   const updatedComponents = await Promise.all(fetchPromises);
@@ -64,5 +63,6 @@ export async function getServerSideProps({ req }) {
 
   return {
     props: { data },
+    revalidate: 60 * 5, // 5 minutes
   };
 }
