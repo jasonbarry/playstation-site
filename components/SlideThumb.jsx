@@ -26,7 +26,7 @@ export default function SlideThumb({ thumb, selected, onClick }) {
               class="media-block__img lozad lazy-loaded"
               data-loaded="true"
             >
-              <Image alt="thumbnail" src={thumb} width={138} height={78} />
+              <Image alt="thumbnail" src={thumb} width={250} height={141} />
             </picture>
           </figure>
         </div>
