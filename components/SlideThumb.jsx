@@ -1,9 +1,4 @@
-const breakpoints = {
-  thumb: [
-    [1200, 768],
-    [800, 320],
-  ],
-};
+import Image from "next/image";
 
 export default function SlideThumb({ thumb, selected, onClick }) {
   return (
@@ -29,17 +24,9 @@ export default function SlideThumb({ thumb, selected, onClick }) {
           >
             <picture
               class="media-block__img lozad lazy-loaded"
-              data-alt="FC24 keyart"
               data-loaded="true"
             >
-              {breakpoints.thumb.map((breakpoint, i) => (
-                <source
-                  key={`thumb-thumb-breakpoint-${i}`}
-                  srcSet={`${thumb}?$${breakpoint[0]}px--t$`}
-                  media={`(min-width: ${breakpoint[1]}px)`}
-                />
-              ))}
-              <img alt="FC24 keyart" />
+              <Image alt="thumbnail" src={thumb} width={138} height={78} />
             </picture>
           </figure>
         </div>
