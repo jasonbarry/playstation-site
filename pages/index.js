@@ -5,8 +5,6 @@ import ExperienceFragment from "../components/ExperienceFragment";
 import ResponsiveGrid from "../components/ResponsiveGrid";
 import Slides from "../components/Slides";
 
-import fetchPlaystationData from "../lib/fetchData";
-
 function Renderer(component, id) {
   const key = `renderer-${id}`;
   switch (component.type) {
@@ -37,8 +35,8 @@ export default function Home({ data }) {
 }
 
 async function fetchReferences(component) {
-  if (component.type === "ExperienceFragment" && component.format === "HTML") {
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}${component.reference}`;
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}${component.reference}`;
+  if (component.format === "HTML") {
     const response = await fetch(url);
     let htmlContent = await response.text();
 
@@ -57,8 +55,11 @@ async function fetchReferences(component) {
         );
       });
     }
-
     component.content = htmlContent;
+  } else if (component.format === "JSON") {
+    const response = await fetch(url);
+    const jsonContent = await response.json();
+    component.content = jsonContent;
   }
 
   // handle nested components
@@ -70,7 +71,9 @@ async function fetchReferences(component) {
 }
 
 export async function getStaticProps(props) {
-  const data = await fetchPlaystationData();
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/content/mock-aem-api.json`,
+  );
 
   // Fetch HTML content for Experience Fragments that are in HTML format
   const promises = data.components.map((component) =>
