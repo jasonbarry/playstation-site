@@ -86,6 +86,6 @@ export async function getStaticProps(props) {
 
   return {
     props: { data },
-    revalidate: 60 * 5, // 5 minutes
+    revalidate: 60 * 10, // 10 minutes
   };
 }
