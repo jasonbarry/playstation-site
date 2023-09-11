@@ -7,20 +7,19 @@ import Slides from "../components/Slides";
 
 import fetchPlaystationData from "../lib/fetchData";
 
-function Renderer(component) {
+function Renderer(component, id) {
+  const key = `renderer-${id}`;
   switch (component.type) {
     case "ExperienceFragment":
-      return <ExperienceFragment {...component} />;
+      return <ExperienceFragment key={key} {...component} />;
     case "ResponsiveGrid":
       return (
-        <ResponsiveGrid>
-          {component.children.map((child) =>
-            Renderer({ key: child.type, ...child }),
-          )}
+        <ResponsiveGrid key={key}>
+          {component.children.map((child, i) => Renderer(child, `${key}-${i}`))}
         </ResponsiveGrid>
       );
     case "Slides":
-      return <Slides {...component.content} />;
+      return <Slides key={key} {...component.content} />;
     default:
       return null;
   }
@@ -41,11 +40,31 @@ async function fetchReferences(component) {
   if (component.type === "ExperienceFragment" && component.format === "HTML") {
     const url = `${process.env.NEXT_PUBLIC_BASE_URL}${component.reference}`;
     const response = await fetch(url);
-    const htmlContent = await response.text();
+    let htmlContent = await response.text();
+
+    // handle server-side includes
+    if (component.children) {
+      const promises = component.children.map(async (path) => {
+        const url = `${process.env.NEXT_PUBLIC_BASE_URL}${path}`;
+        const fragment = await fetch(url);
+        return await fragment.text();
+      });
+      const children = await Promise.all(promises);
+      component.children.forEach((child, i) => {
+        htmlContent = htmlContent.replace(
+          "<!--#include children -->",
+          children[i],
+        );
+      });
+    }
+
     component.content = htmlContent;
   }
+
+  // handle nested components
   if (component.children) {
-    component.children.forEach(async (child) => await fetchReferences(child));
+    const promises = component.children.map((child) => fetchReferences(child));
+    await Promise.all(promises);
   }
   return component;
 }
@@ -54,11 +73,11 @@ export async function getStaticProps(props) {
   const data = await fetchPlaystationData();
 
   // Fetch HTML content for Experience Fragments that are in HTML format
-  const fetchPromises = data.components.map(
-    async (component) => await fetchReferences(component),
+  const promises = data.components.map((component) =>
+    fetchReferences(component),
   );
 
-  const updatedComponents = await Promise.all(fetchPromises);
+  const updatedComponents = await Promise.all(promises);
   data.components = updatedComponents;
 
   return {

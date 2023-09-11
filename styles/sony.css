@@ -96039,3 +96039,7 @@ html.psw-rem-base .wishlist-icon--mobile .psw-icon {
 #shared-nav .psw-root .profile-dropdown-item:focus, #shared-nav .psw-root .profile-dropdown-item:hover {
   background-color: rgba(60, 174, 251, .08)
 }
+
+.carousel.flickity-resize > a {
+  width: 15%;
+}

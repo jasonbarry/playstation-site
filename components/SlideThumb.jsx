@@ -5,25 +5,26 @@ export default function SlideThumb({ thumb, selected, onClick }) {
     <div
       role="button"
       tabIndex="0"
-      class={`slider__control carousel-cell ${selected ? "is-selected" : ""}`}
-      href="javascript:void(0)"
+      className={`slider__control carousel-cell ${
+        selected ? "is-selected" : ""
+      }`}
       data-control-id="1"
       onClick={onClick}
     >
       <div
-        class="media-block media-block--image"
+        className="media-block media-block--image"
         data-component="image-block"
         data-age-gated="false"
         data-lightbox-theme="light"
       >
-        <div class="media-block__inner">
+        <div className="media-block__inner">
           <figure
-            itemscope=""
-            itemtype="http://schema.org/ImageObject"
-            class="media-block__figure"
+            itemScope=""
+            itemType="http://schema.org/ImageObject"
+            className="media-block__figure"
           >
             <picture
-              class="media-block__img lozad lazy-loaded"
+              className="media-block__img lozad lazy-loaded"
               data-loaded="true"
             >
               <Image alt="thumbnail" src={thumb} width={250} height={141} />

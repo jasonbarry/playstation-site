@@ -163,11 +163,11 @@ export default function Slide(props) {
             >
               <div>
                 {ctas.includes("pre-order-now") && (
-                  <div class="button">
+                  <div className="button">
                     <a
                       data-uuid="3105184c-4cc8-3daf-a355-8c92fc205e44"
                       href={href}
-                      class="cta__purchase"
+                      className="cta__purchase"
                       role="button"
                       target="_self"
                       data-age-gated="false"
@@ -176,18 +176,18 @@ export default function Slide(props) {
                       data-dtm-label="Pre-order now"
                       data-dtm-label-override="Pre-order now"
                     >
-                      <div class="cta__inner">
+                      <div className="cta__inner">
                         <span>Pre-order now</span>
                       </div>
                     </a>
                   </div>
                 )}
                 {ctas.includes("buy-now") && (
-                  <div class="button">
+                  <div className="button">
                     <a
                       data-uuid="14ac9f13-56a5-3361-ab9c-cc7d9e587990"
                       href={href}
-                      class="cta__purchase"
+                      className="cta__purchase"
                       role="button"
                       target="_self"
                       data-age-gated="false"
@@ -196,7 +196,7 @@ export default function Slide(props) {
                       data-dtm-label="Buy now"
                       data-dtm-label-override="Buy now"
                     >
-                      <div class="cta__inner">
+                      <div className="cta__inner">
                         <span>Buy now</span>
                       </div>
                     </a>
