@@ -71,9 +71,10 @@ async function fetchReferences(component) {
 }
 
 export async function getStaticProps(props) {
-  const data = await fetch(
+  const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/content/mock-aem-api.json`,
   );
+  const data = await response.json();
 
   // Fetch HTML content for Experience Fragments that are in HTML format
   const promises = data.components.map((component) =>
