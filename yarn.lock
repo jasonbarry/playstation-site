@@ -65,11 +65,6 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@netlify/plugin-csp-nonce@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@netlify/plugin-csp-nonce/-/plugin-csp-nonce-1.2.2.tgz#fc2f9260875662d6adc1043dd54885effb3165ea"
-  integrity sha512-F8B24GfccN+XMfq4aQ0QJ3FOqs4wj6N3BRlxYBbaRFBXLwXeHK2MUVwHUGLLn311C0qwyTcb/T7HFwLfFhSmDQ==
-
 "@next/env@13.4.19":
   version "13.4.19"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-13.4.19.tgz#46905b4e6f62da825b040343cbc233144e9578d3"
